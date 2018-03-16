@@ -11,11 +11,13 @@
     <div id="app" class="container">
         @include ('projects.list')      
 
-        <form method="POST" action="/projects">
+        <form method="POST" action="/projects" @submit.prevent="onSubmit" @keydown="errors.clear($event.target.name)">
             <div class="control">
                 <label for="name" class="label">Project Name:</label>
                 
                 <input type="text" id="name" name="name" class="input" v-model="name"> 
+
+                <span class="help is-danger" v-if="errors.has('name')" v-text="errors.get('name')"></span>
 
             </div>
 
@@ -24,10 +26,11 @@
                 
                 <input type="text" id="description" name="description" class="input" v-model="description">
 
+                <span class="help is-danger" v-if="errors.has('description')" v-text="errors.get('description')"></span>
             </div>
 
             <div class="control">
-                <button class="button is-primary" :disabled="form.errors.any()">Create</button>
+                <button class="button is-primary" :disabled="errors.any()">Create</button>
             </div>
         </form>
     </div>
